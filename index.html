@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Ôn tập Giữa kỳ I - Toán 6 (4 Đề)</title>
+<style>
+:root{--primary:#2563eb;--bg:#eef2f7;--text:#1f2937;--green:#16a34a;--red:#dc2626;--orange:#ea580c}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:16px;padding-bottom:80px}
+.wrap{max-width:900px;margin:0 auto}
+header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:16px;padding:22px;text-align:center;box-shadow:0 8px 24px rgba(37,99,235,.25);margin-bottom:16px}
+header h1{font-size:1.3rem;margin-bottom:6px}
+header p{font-size:0.95rem;opacity:0.9}
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.part-title{background:#f1f5ff;border-left:5px solid var(--primary);padding:12px 16px;border-radius:8px;font-weight:800;color:#1e40af;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.part-title span.pt{font-size:0.85rem;color:#64748b;font-weight:700}
+.q{padding:16px 0;border-bottom:1px solid #e2e8f0}
+.q:last-child{border-bottom:none;padding-bottom:0}
+.qtext{font-weight:600;margin-bottom:12px;font-size:1.05rem}
+
+/* Khung chứa chữ thay thế ảnh */
+.img-container{text-align:center;margin:10px 0;background:#f8fafc;padding:20px 10px;border-radius:8px;border:1px dashed #cbd5e1;color:#64748b;font-weight:bold;font-style:italic;font-size:1.1rem}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:10px;padding:12px;border:1.5px solid #dbe3ee;border-radius:10px;cursor:pointer;background:#fff;transition:0.15s}
+.opt:hover{background:#f0f5ff;border-color:#93b4f5}
+.opt input{width:18px;height:18px;accent-color:var(--primary)}
+.tf-table{width:100%;border-collapse:collapse;margin-top:10px}
+.tf-table td,.tf-table th{border:1px solid #cbd5e1;padding:10px;text-align:center}
+.tf-table th{background:#f8fafc;font-weight:700}
+.tf-table td:first-child{text-align:left;font-weight:500}
+.tf-btn{padding:6px 16px;border:1.5px solid #dbe3ee;background:#fff;border-radius:6px;cursor:pointer;font-weight:600;margin:0 4px;transition:0.2s}
+.tf-btn.active[data-val="true"]{background:#dcfce7;border-color:var(--green);color:var(--green)}
+.tf-btn.active[data-val="false"]{background:#fee2e2;border-color:var(--red);color:var(--red)}
+.fill-input{width:100%;padding:12px;border:2px solid #dbe3ee;border-radius:10px;font-size:1.1rem;font-weight:600;text-align:center;margin-top:8px}
+.fill-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.sub-q{background:#f8fafc;padding:12px;border-radius:8px;margin-top:10px;border:1px solid #e2e8f0}
+.sub-q p{font-weight:600;margin-bottom:8px}
+.btn-submit, .btn-reload{display:block;width:100%;max-width:400px;margin:20px auto;padding:16px;border:none;border-radius:12px;font-size:1.1rem;font-weight:800;cursor:pointer;transition:0.2s}
+.btn-submit{background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;box-shadow:0 6px 18px rgba(37,99,235,.3);}
+.btn-reload{background:linear-gradient(135deg,#16a34a,#059669);color:#fff;box-shadow:0 6px 18px rgba(22,163,74,.3);display:none;}
+.btn-submit:active, .btn-reload:active{transform:scale(0.98)}
+.result-box{display:none;background:#fff;border-radius:14px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-top:20px}
+.result-box.show{display:block}
+.score-big{font-size:3.5rem;font-weight:900;color:var(--primary);line-height:1.2;margin:10px 0}
+.score-detail{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.score-detail div{background:#f1f5f9;padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.9rem}
+.q-result{font-weight:600;margin-top:16px;padding:10px;border-radius:8px;text-align:left;font-size:0.95rem}
+.q-result.correct{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.q-result.wrong{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+.footer{text-align:center;color:#64748b;font-size:0.85rem;margin-top:30px;font-weight:600}
+
+/* CSS cho màn hình chọn đề */
+#startScreen{text-align:center;padding:40px 20px;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);margin-top:20px}
+#startScreen h2{font-size:1.5rem;margin-bottom:10px;color:#1e40af}
+#startScreen p{color:#64748b;margin-bottom:24px}
+.btn-choice{display:inline-block;margin:8px;padding:16px 24px;font-size:1.1rem;font-weight:bold;border-radius:12px;border:none;cursor:pointer;color:#fff;transition:0.2s;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.btn-choice:active{transform:scale(0.95)}
+.btn-c1{background:linear-gradient(135deg,#2563eb,#3b82f6)}
+.btn-c2{background:linear-gradient(135deg,#ea580c,#f97316)}
+.btn-c3{background:linear-gradient(135deg,#16a34a,#22c55e)}
+.btn-c4{background:linear-gradient(135deg,#9333ea,#a855f7)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>📘 ÔN TẬP GIỮA HỌC KỲ I - TOÁN 6</h1>
+    <p>Trường THCS Tây Thái Ninh - Năm học 2026-2027</p>
+  </header>
+
+  <!-- MÀN HÌNH CHỌN ĐỀ -->
+  <div id="startScreen">
+    <h2>CHỌN ĐỀ KIỂM TRA</h2>
+    <p>Thời gian làm bài: 90 phút (Không đảo đề)</p>
+    <button class="btn-choice btn-c1" onclick="startExam(1)">📝 ĐỀ SỐ 1</button>
+    <button class="btn-choice btn-c2" onclick="startExam(2)">📝 ĐỀ SỐ 2</button>
+    <button class="btn-choice btn-c3" onclick="startExam(3)">📝 ĐỀ SỐ 3</button>
+    <button class="btn-choice btn-c4" onclick="startExam(4)">📝 ĐỀ SỐ 4</button>
+  </div>
+
+  <!-- GIAO DIỆN LÀM BÀI -->
+  <div id="examUI" style="display:none">
+    <div class="card" id="examContent">
+      <div class="part-title" id="examTitleHeader">ĐANG TẢI ĐỀ...</div>
+      
+      <div class="part-title" style="background:#e0e7ff;border-left-color:#4f46e5;font-size:0.95rem">
+        <div>PHẦN I. CÂU TRẮC NGHIỆM NHIỀU PHƯƠNG ÁN LỰA CHỌN (3,0 điểm)</div>
+        <span class="pt">12 câu - 0,25đ/câu</span>
+      </div>
+      <div id="p1-container"></div>
+
+      <div class="part-title" style="background:#e0e7ff;border-left-color:#4f46e5;font-size:0.95rem;margin-top:30px">
+        <div>PHẦN II. CÂU TRẮC NGHIỆM ĐÚNG SAI (2,0 điểm)</div>
+        <span class="pt">2 câu - 1đ/câu</span>
+      </div>
+      <div id="p2-container"></div>
+
+      <div class="part-title" style="background:#e0e7ff;border-left-color:#4f46e5;font-size:0.95rem;margin-top:30px">
+        <div>PHẦN III. CÂU TRẮC NGHIỆM TRẢ LỜI NGẮN (2,0 điểm)</div>
+        <span class="pt">4 câu - 0,5đ/câu</span>
+      </div>
+      <div id="p3-container"></div>
+    </div>
+
+    <div class="card">
+      <div class="part-title">
+        <div>PHẦN B. TỰ LUẬN (3,0 ĐIỂM)</div>
+        <span class="pt">Trình bày ra giấy nháp, điền kết quả cuối cùng vào ô bên dưới</span>
+      </div>
+      <div id="p4-container"></div>
+    </div>
+
+    <button class="btn-submit" id="btnSubmit" onclick="submitExam()">✅ NỘP BÀI VÀ CHẤM ĐIỂM</button>
+    <button class="btn-reload" id="btnReload" onclick="location.reload()">🔄 CHỌN ĐỀ KHÁC / LÀM LẠI</button>
+
+    <div class="result-box" id="resultBox">
+      <h2>KẾT QUẢ CỦA BẠN</h2>
+      <div class="score-big" id="finalScore">0</div>
+      <p style="color:#64748b">Thang điểm 10</p>
+      <div class="score-detail" id="scoreDetail"></div>
+      <div id="reviewContainer" style="margin-top:20px;text-align:left"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Bản quyền của GV: Hoàng Anh Dũng - Trường THCS Tây Thái Ninh
+  </div>
+</div>
+
+<script>
+// ==========================================
+// DỮ LIỆU GỐC 4 ĐỀ
+// ==========================================
+const allData = {
+  1: {
+    p1: [
+      { id:1, q:"Cho tập hợp A = {2; 4; 6; 8}. Khẳng định nào sau đây đúng?", opts:["3 ∈ A","8 ∉ A","6 ∈ A","5 ∈ A"], ans:2 },
+      { id:2, q:"Trong số 4 527, chữ số 5 có giá trị là", opts:["500","50","5","5 000"], ans:0 },
+      { id:3, q:"Số tự nhiên liền sau của số 2 099 là", opts:["2 098","2 009","3 000","2 100"], ans:3 },
+      { id:4, q:"Kết quả của phép tính 3<sup>4</sup> · 3<sup>2</sup> viết dưới dạng một luỹ thừa là", opts:["3<sup>8</sup>","3<sup>6</sup>","9<sup>6</sup>","3<sup>2</sup>"], ans:1 },
+      { id:5, q:"Đối với biểu thức không có dấu ngoặc, gồm các phép tính cộng, trừ, nhân, chia, nâng lên luỹ thừa, thứ tự thực hiện phép tính là", opts:["Nhân và chia, rồi đến nâng lên luỹ thừa, cuối cùng đến cộng và trừ.","Cộng và trừ, rồi đến nhân và chia, cuối cùng đến nâng lên luỹ thừa.","Nâng lên luỹ thừa, rồi đến nhân và chia, cuối cùng đến cộng và trừ.","Thực hiện lần lượt từ trái sang phải, không phân biệt loại phép tính."], ans:2 },
+      { id:6, q:"Số nào sau đây là ước của 18?", opts:["6","4","36","12"], ans:0 },
+      { id:7, q:"Số nào sau đây chia hết cho cả 2 và 5?", opts:["1 235","1 230","1 232","2 025"], ans:1 },
+      { id:8, q:"Số nào sau đây là số nguyên tố?", opts:["15","21","1","13"], ans:3 },
+      { id:9, q:"Tập hợp ƯC(6, 9) là", opts:["{1; 3}","{1; 2; 3}","{3}","{1; 3; 6; 9}"], ans:0 },
+      { id:10, q:"Kết quả phân tích số 120 ra thừa số nguyên tố là", opts:["2<sup>2</sup> · 3 · 10","2<sup>3</sup> · 15","2<sup>3</sup> · 3 · 5","2 · 3 · 4 · 5"], ans:2 },
+      { id:11, q:"Cho hình chữ nhật ABCD có hai đường chéo cắt nhau tại O (hình bên). Khẳng định nào sau đây đúng?", img:"HÌNH 1", opts:["AB = BC","AC = BD","AC ⊥ BD","OA = AB"], ans:1 },
+      { id:12, q:"Hình thoi MNPQ ở hình bên có hai đường chéo MP = 8 cm, NQ = 6 cm. Diện tích hình thoi MNPQ là", img:"HÌNH 2", opts:["48 cm²","14 cm²","28 cm²","24 cm²"], ans:3 }
+    ],
+    p2: [
+      { id:13, q:"Cho hai số a = 72 và b = 108.", subs:[
+          { text:"a) a chia hết cho 9.", ans:true },
+          { text:"b) b là số nguyên tố.", ans:false },
+          { text:"c) ƯCLN(a, b) = 36.", ans:true },
+          { text:"d) Có đúng 4 bội chung khác 0 của a và b nhỏ hơn 700.", ans:false }
+      ]},
+      { id:14, q:"Một mảnh bìa hình chữ nhật ABCD có AB = 10 cm, BC = 6 cm. Trên cạnh AB lấy điểm E, trên cạnh CD lấy điểm F sao cho AE = DF = 4 cm (hình bên).", img:"HÌNH 3", subs:[
+          { text:"a) CD = 10 cm.", ans:true },
+          { text:"b) Hình chữ nhật ABCD có hai đường chéo vuông góc với nhau.", ans:false },
+          { text:"c) Diện tích tứ giác EBCF bằng 36 cm².", ans:true },
+          { text:"d) Cắt mảnh bìa theo đoạn thẳng EF được hai mảnh. Tổng chu vi hai mảnh lớn hơn chu vi mảnh bìa ban đầu là 12 cm.", ans:true }
+      ]}
+    ],
+    p3: [
+      { id:15, q:"Tính giá trị của biểu thức 2<sup>5</sup> – 5<sup>2</sup>.", ans:"7" },
+      { id:16, q:"Tìm chữ số x để số 25x chia hết cho cả 3 và 5.", ans:"5" },
+      { id:17, q:"Hình bình hành ABCD ở hình bên có cạnh CD = 9 cm, chiều cao AH = 5 cm. Tính diện tích hình bình hành ABCD (đơn vị: cm²).", img:"HÌNH 4", ans:"45" },
+      { id:18, q:"Bạn Minh mua 5 quyển vở, giá 12 000 đồng một quyển và 3 chiếc bút bi, giá 8 000 đồng một chiếc. Minh đưa cho người bán tờ 100 000 đồng. Hỏi người bán phải trả lại Minh bao nhiêu nghìn đồng?", ans:"16" }
+    ],
+    p4: [
+      { id:19, maxScore:1, subs:[
+          { q:"Câu 19a) Tính một cách hợp lí: 47 · 68 + 47 · 32 − 700. Kết quả = ...", ans:"4000" },
+          { q:"Câu 19b) Tìm số tự nhiên x, biết 2 · 3<sup>x+1</sup> – 7 = 155. Vậy x = ...", ans:"3" }
+      ]},
+      { id:20, maxScore:1, q:"Câu 20. Cô giáo chủ nhiệm có 60 quyển vở, 48 chiếc bút bi và 36 chiếc thước kẻ. Cô muốn chia đều số vở, số bút bi và số thước kẻ đó thành các phần quà như nhau để tặng học sinh.", subs:[
+          { q:"a) Cô có thể chia được nhiều nhất bao nhiêu phần quà?", ans:"12" },
+          { q:"b) Khi đó, mỗi phần quà có bao nhiêu quyển vở?", ans:"5" },
+          { q:"c) Mỗi phần quà có bao nhiêu chiếc bút bi?", ans:"4" },
+          { q:"d) Mỗi phần quà có bao nhiêu chiếc thước kẻ?", ans:"3" }
+      ]},
+      { id:21, maxScore:1, q:"Câu 21. Một mảnh vườn hình chữ nhật ABCD có chiều dài AB = 20 m, chiều rộng AD = 12 m. Người ta làm một lối đi hình bình hành AMCN với AM = CN = 3 m (phần tô đậm ở hình bên), phần đất còn lại dùng để trồng rau.", img:"HÌNH 5", subs:[
+          { q:"a) Diện tích mảnh vườn là bao nhiêu m²?", ans:"240" },
+          { q:"b) Diện tích lối đi là bao nhiêu m²?", ans:"36" },
+          { q:"c) Mỗi mét vuông đất trồng rau thu hoạch được 2 kg rau. Bác chủ vườn bán hết số rau thu hoạch với giá 12 000 đồng/kg. Tính số tiền bác thu được (đồng).", ans:"4896000" }
+      ]}
+    ]
+  },
+  2: {
+    p1: [
+      { id:1, q:"Cho tập hợp B = {x ∈ N | x < 4}. Viết tập hợp B bằng cách liệt kê các phần tử, ta được", opts:["B = {1; 2; 3}","B = {0; 1; 2; 3}","B = {0; 1; 2; 3; 4}","B = {1; 2; 3; 4}"], ans:1 },
+      { id:2, q:"Số La Mã XIV có giá trị là", opts:["16","9","104","14"], ans:3 },
+      { id:3, q:"Số nhỏ nhất trong tập hợp N* là", opts:["1","0","2","Không có số nhỏ nhất"], ans:0 },
+      { id:4, q:"Kết quả của phép tính 5<sup>7</sup> : 5<sup>3</sup> viết dưới dạng một luỹ thừa là", opts:["5<sup>10</sup>","5<sup>21</sup>","5<sup>4</sup>","1<sup>4</sup>"], ans:2 },
+      { id:5, q:"Giá trị của biểu thức 20 – 2 · 3<sup>2</sup> là", opts:["162","2","14","4"], ans:1 },
+      { id:6, q:"Số nào sau đây là bội của 7?", opts:["15","27","50","35"], ans:3 },
+      { id:7, q:"Số nào sau đây chia hết cho 9?", opts:["3 726","3 725","2 019","1 234"], ans:2 },
+      { id:8, q:"Số nào sau đây là hợp số?", opts:["2","17","27","31"], ans:2 },
+      { id:9, q:"Số nào sau đây là bội chung của 4 và 6?", opts:["8","24","18","30"], ans:1 },
+      { id:10, q:"Kết quả phân tích số 180 ra thừa số nguyên tố là", opts:["2 · 3<sup>2</sup> · 10","2<sup>2</sup> · 45","4 · 9 · 5","2<sup>2</sup> · 3<sup>2</sup> · 5"], ans:3 },
+      { id:11, q:"Cho hình thoi ABCD có hai đường chéo cắt nhau tại O (hình bên). Khẳng định nào sau đây đúng?", img:"HÌNH 6", opts:["AC ⊥ BD","AC = BD","AB = AC","OA = OB"], ans:0 },
+      { id:12, q:"Hình thang cân ABCD ở hình bên có đáy nhỏ AB = 4 cm, đáy lớn CD = 10 cm, chiều cao AH = 6 cm. Diện tích hình thang cân ABCD là", img:"HÌNH 7", opts:["84 cm²","20 cm²","42 cm²","240 cm²"], ans:2 }
+    ],
+    p2: [
+      { id:13, q:"Cho hai số a = 54 và b = 90.", subs:[
+          { text:"a) a chia hết cho 5.", ans:false },
+          { text:"b) 3 là ước chung của a và b.", ans:true },
+          { text:"c) BCNN(a, b) = 270.", ans:true },
+          { text:"d) a và b có đúng 4 ước chung.", ans:false }
+      ]},
+      { id:14, q:"Cho hình lục giác đều ABCDEF có cạnh 4 cm, tâm O (hình bên).", img:"HÌNH 8", subs:[
+          { text:"a) Sáu góc của hình lục giác đều ABCDEF bằng nhau.", ans:true },
+          { text:"b) AD = AB.", ans:false },
+          { text:"c) Chu vi hình lục giác đều ABCDEF bằng 24 cm.", ans:true },
+          { text:"d) Biết diện tích tam giác OAB khoảng 6,9 cm². Khi đó diện tích hình lục giác đều ABCDEF khoảng 20,7 cm².", ans:false }
+      ]}
+    ],
+    p3: [
+      { id:15, q:"Tính giá trị của biểu thức 3<sup>4</sup> – 4<sup>3</sup>.", ans:"17" },
+      { id:16, q:"Tìm chữ số x để số 4x7 chia hết cho 9.", ans:"7" },
+      { id:17, q:"Hình bình hành ABCD ở hình bên có AB = 8 cm, BC = 5 cm. Tính chu vi hình bình hành ABCD (đơn vị: cm).", img:"HÌNH 9", ans:"26" },
+      { id:18, q:"Bác Hà mua 4 kg táo, giá 35 000 đồng một ki-lô-gam và 3 kg cam, giá 28 000 đồng một ki-lô-gam. Bác đưa cho người bán 300 000 đồng. Hỏi người bán phải trả lại bác Hà bao nhiêu nghìn đồng?", ans:"76" }
+    ],
+    p4: [
+      { id:19, maxScore:1, subs:[
+          { q:"Câu 19a) Tính một cách hợp lí: 53 · 125 – 53 · 25 – 300. Kết quả = ...", ans:"5000" },
+          { q:"Câu 19b) Tìm số tự nhiên x, biết 5 · 2<sup>x-1</sup> + 12 = 92. Vậy x = ...", ans:"5" }
+      ]},
+      { id:20, maxScore:1, q:"Câu 20. Số học sinh khối 6 của một trường trong khoảng từ 300 đến 400 em. Khi xếp thành hàng 12, hàng 15 hay hàng 18 thì đều vừa đủ, không thừa em nào.", subs:[
+          { q:"a) Tìm BCNN(12, 15, 18).", ans:"180" },
+          { q:"b) Tính số học sinh khối 6 của trường đó.", ans:"360" }
+      ]},
+      { id:21, maxScore:1, q:"Câu 21. Nền một căn phòng có dạng hình chữ nhật ABCD với chiều dài AB = 8 m, chiều rộng BC = 6 m (hình bên).", img:"HÌNH 10", subs:[
+          { q:"a) Chu vi nền căn phòng là bao nhiêu mét?", ans:"28" },
+          { q:"b) Diện tích nền căn phòng là bao nhiêu m²?", ans:"48" },
+          { q:"c) Người ta lát kín nền căn phòng bằng các viên gạch hình vuông cạnh 40 cm, giá 25 000 đồng một viên. Tính số tiền mua gạch (đồng).", ans:"7500000" }
+      ]}
+    ]
+  },
+  3: {
+    p1: [
+      { id:1, q:"Cho tập hợp A = {2; 4; 5; 8}. Khẳng định nào sau đây đúng?", opts:["3 ∈ A","8 ∉ A","5 ∈ A","6 ∈ A"], ans:2 },
+      { id:2, q:"Trong số 4 327, chữ số 3 có giá trị là?", opts:["300","30","3","3 000"], ans:0 },
+      { id:3, q:"Số tự nhiên liền sau của số 3 099 là?", opts:["3 098","3 009","4 000","3 100"], ans:3 },
+      { id:4, q:"Kết quả của phép tính 5<sup>4</sup> · 5<sup>2</sup> viết dưới dạng một luỹ thừa là?", opts:["5<sup>8</sup>","5<sup>6</sup>","5<sup>4</sup>","5<sup>2</sup>"], ans:1 },
+      { id:5, q:"Đối với biểu thức không có dấu ngoặc, gồm các phép tính cộng, trừ, nhân, chia, nâng lên luỹ thừa, thứ tự thực hiện phép tính là", opts:["Nhân và chia, rồi đến nâng lên luỹ thừa, cuối cùng đến cộng và trừ.","Cộng và trừ, rồi đến nhân và chia, cuối cùng đến nâng lên luỹ thừa.","Nâng lên luỹ thừa, rồi đến nhân và chia, cuối cùng đến cộng và trừ.","Thực hiện lần lượt từ trái sang phải, không phân biệt loại phép tính."], ans:2 },
+      { id:6, q:"Số nào sau đây là ước của 20?", opts:["5","30","40","8"], ans:0 },
+      { id:7, q:"Số nào sau đây chia hết cho cả 2 và 5?", opts:["4 135","3 270","4 236","3 025"], ans:1 },
+      { id:8, q:"Số nào sau đây là số nguyên tố?", opts:["35","26","4","17"], ans:3 },
+      { id:9, q:"Tập hợp ƯC(8; 12) là?", opts:["{1; 2; 4}","{1; 2; 3}","{4}","{1; 2; 3; 4}"], ans:0 },
+      { id:10, q:"Kết quả phân tích số 180 ra thừa số nguyên tố là", opts:["2<sup>2</sup> · 15 · 3","2<sup>2</sup> · 45","2<sup>2</sup> · 3<sup>2</sup> · 5","9 · 4 · 5"], ans:2 },
+      { id:11, q:"Cho hình chữ nhật ABCD có hai đường chéo cắt nhau tại O (hình bên). Khẳng định nào sau đây đúng?", img:"HÌNH 1", opts:["AD = AB","AC = BD","AC ⊥ BD","OB = AB"], ans:1 },
+      { id:12, q:"Hình thoi MNPQ ở hình bên có hai đường chéo MP = 9 cm, NQ = 8 cm. Diện tích hình thoi MNPQ là?", img:"HÌNH 2", opts:["36 cm","17 cm²","72 cm²","36 cm²"], ans:3 }
+    ],
+    p2: [
+      { id:13, q:"Cho hai số a = 45 và b = 75.", subs:[
+          { text:"a) a chia hết cho 9.", ans:true },
+          { text:"b) b là số nguyên tố.", ans:false },
+          { text:"c) ƯCLN(a; b) = 15.", ans:true },
+          { text:"d) Có đúng 2 bội chung khác 0 của a và b nhỏ hơn 700.", ans:false }
+      ]},
+      { id:14, q:"Một mảnh bìa hình chữ nhật ABCD có AB = 10 cm, BC = 6 cm. Trên cạnh AB lấy điểm E, trên cạnh CD lấy điểm F sao cho AE = DF = 4 cm (HÌNH 3).", img:"HÌNH 13", subs:[
+          { text:"a) CD = 10 cm.", ans:true },
+          { text:"b) Hình chữ nhật ABCD có hai đường chéo vuông góc với nhau.", ans:false },
+          { text:"c) Diện tích tứ giác EBCF bằng 36 cm².", ans:true },
+          { text:"d) Cắt mảnh bìa theo đoạn thẳng EF được hai mảnh. Tổng chu vi hai mảnh lớn hơn chu vi mảnh bìa ban đầu là 12 cm.", ans:true }
+      ]}
+    ],
+    p3: [
+      { id:15, q:"Tính giá trị của biểu thức 3<sup>5</sup> – 5<sup>3</sup>.", ans:"118" },
+      { id:16, q:"Tìm chữ số x để số 37x chia hết cho cả 3 và 5.", ans:"5" },
+      { id:17, q:"Cho hình bình hành ABCD có cạnh đáy CD = 10 cm, chiều cao AH = 4 cm. Tính diện tích hình bình hành ABCD (đơn vị: cm²).", ans:"40" },
+      { id:18, q:"Bạn Nga mua 6 quyển vở, giá 15 000 đồng một quyển và 5 chiếc bút bi, giá 6 000 đồng một chiếc. Nga đưa cho người bán tờ 200 000 đồng. Hỏi người bán phải trả lại Nga bao nhiêu tiền? (đơn vị là đồng)", ans:"80000" }
+    ],
+    p4: [
+      { id:19, maxScore:1, subs:[
+          { q:"Câu 19a) Tính một cách hợp lí: 26 · 73 + 26 · 27 − 574. Kết quả = ...", ans:"2026" },
+          { q:"Câu 19b) Tìm số tự nhiên x, biết 30.x − 14 = 2026. Vậy x = ...", ans:"68" }
+      ]},
+      { id:20, maxScore:1, q:"Câu 20. Cô giáo có 90 cái bút và 60 quyển vở. Cô muốn chia đều số bút và số vở đó thành các phần quà như nhau.", subs:[
+          { q:"a) Cô giáo có thể chia được nhiều nhất bao nhiêu phần quà?", ans:"30" },
+          { q:"b) Khi chia nhiều phần quà nhất thì mỗi phần quà có bao nhiêu cái bút?", ans:"3" },
+          { q:"c) Mỗi phần quà có bao nhiêu quyển vở?", ans:"2" }
+      ]},
+      { id:21, maxScore:1, q:"Câu 21. Một mảnh vườn hình chữ nhật ABCD có chiều dài 12 m, chiều rộng 10 m. Người ta trồng hoa trong khu vực hình bình hành AMCN, cỏ trồng ở phần đất còn lại. Tiền công trồng hoa là 40 000 đồng/m², trồng cỏ là 30 000 đồng/m².", img:"HÌNH 11", subs:[
+          { q:"a) Diện tích mảnh vườn là bao nhiêu m²?", ans:"120" },
+          { q:"b) Diện tích trồng hoa là bao nhiêu m²?", ans:"60" },
+          { q:"c) Diện tích trồng cỏ là bao nhiêu m²?", ans:"60" },
+          { q:"d) Tính số tiền công cần trả để trồng hoa và trồng cỏ (đồng).", ans:"4200000" }
+      ]}
+    ]
+  },
+  4: {
+    p1: [
+      { id:1, q:"Tập hợp số tự nhiên nhỏ hơn 6 là:", opts:["{0;1;2;3;4;5;6}","{1;2;3;4;5}","{0;1;2;3;4;5}","{01;2;3;4;5;6}"], ans:2 },
+      { id:2, q:"Số nào sau đây không là số tự nhiên?", opts:["0","1","-2","9"], ans:2 },
+      { id:3, q:"Trong các cặp số sau, cặp nào có số đứng trước lớn hơn số đứng sau?", opts:["(3;5)","(4;2)","(7;9)","(2;2)"], ans:1 },
+      { id:4, q:"Giá trị biểu thức 5+3.2 là:", opts:["16","11","21","13"], ans:1 },
+      { id:5, q:"Thứ tự đúng của các phép tính trong một biểu thức là:", opts:["Cộng, trừ, nhân, chia, lũy thừa, ngoặc","Ngoặc, cộng, trừ, nhân, chia, lũy thừa","Ngoặc, lũy thừa, nhân và chia, cộng và trừ","Lũy thừa, nhân, chia, cộng, trừ, ngoặc"], ans:2 },
+      { id:6, q:"Số 45 chia hết cho:", opts:["2","3","6","4"], ans:1 },
+      { id:7, q:"Số nào là số nguyên tố?", opts:["4","9","7","15"], ans:2 },
+      { id:8, q:"Số nào là bội nhỏ nhất của 6 (khác 0)?", opts:["0","1","24","6"], ans:3 }, 
+      { id:9, q:"Trong các phân số sau, phân số tối giản là:", opts:["6/9","4/8","5/6","8/12"], ans:2 },
+      { id:10, q:"Ước chung lớn nhất của 18 và 24 là:", opts:["3","4","6","12"], ans:2 },
+      { id:11, q:"Trong một hình vuông, phát biểu nào sau đây đúng nhất?", opts:["Hai đường chéo bằng nhau.","Có bốn góc vuông.","Có bốn cạnh bằng nhau, bốn góc vuông và hai đường chéo bằng nhau.","Có bốn cạnh bằng nhau."], ans:2 },
+      { id:12, q:"Hình thang cân là hình có:", opts:["Một cặp cạnh đối song song và bằng nhau","Hai cặp cạnh đối song song","Một cạnh vuông góc với đáy","Cạnh bên bằng nhau và hai đáy song song"], ans:3 }
+    ],
+    p2: [
+      { id:13, q:"Cho tập hợp A gồm các số tự nhiên từ 1 đến 30:", subs:[
+          { text:"a) Số 0 thuộc tập hợp A.", ans:false },
+          { text:"b) Số 35 thuộc tập A và chia hết cho 5.", ans:false },
+          { text:"c) Số 8 và 9 thuộc tập A là hai số nguyên tố cùng nhau.", ans:true },
+          { text:"d) Tích của hai số nguyên tố luôn là một hợp số.", ans:true }
+      ]},
+      { id:14, q:"Nhà Mai có một mảnh đất hình chữ nhật có chiều dài 20m, chiều rộng bằng nửa chiều dài.", subs:[
+          { text:"a) Mảnh đất có hai cạnh dài 20m và hai cạnh ngắn 15m.", ans:false },
+          { text:"b) Mỗi góc của mảnh đất là một góc vuông.", ans:true },
+          { text:"c) Chu vi của mảnh đất là 60m và diện tích là 200m².", ans:true },
+          { text:"d) Nếu rào toàn bộ mảnh đất bằng hàng rào sắt giá 120000 đồng/m và lát toàn bộ mảnh đất bằng gạch giá 180000 đồng/m² thì tổng chi phí phải trả là 25200000 đồng.", ans:false }
+      ]}
+    ],
+    p3: [
+      { id:15, q:"Tính giá trị của biểu thức 2<sup>5</sup> – 5<sup>2</sup>.", ans:"7" },
+      { id:16, q:"Tìm chữ số x để số 25x chia hết cho cả 3 và 5.", ans:"5" },
+      { id:17, q:"Hình bình hành ABCD ở hình bên có cạnh CD = 9 cm, chiều cao AH = 5 cm. Tính diện tích hình bình hành ABCD (đơn vị: cm²).", img:"HÌNH 12", ans:"45" },
+      { id:18, q:"Bạn Minh mua 5 quyển vở, giá 12 000 đồng một quyển và 3 chiếc bút bi, giá 8 000 đồng một chiếc. Minh đưa cho người bán tờ 100 000 đồng. Hỏi người bán phải trả lại Minh bao nhiêu nghìn đồng?", ans:"16" }
+    ],
+    p4: [
+      { id:19, maxScore:1, subs:[
+          { q:"Câu 19a) Thực hiện phép tính (Tính hợp lý nếu có thể): 75.63 + 95.46 + 75.32 - 95.21. Kết quả = ...", ans:"9500" },
+          { q:"Câu 19b) Thực hiện phép tính: 100 : {250 : [450 - (4. 5³ - 2². 25)]}. Kết quả = ...", ans:"20" }
+      ]},
+      { id:20, maxScore:1, subs:[
+          { q:"Câu 20a) Tìm số tự nhiên x biết 315 : (x + 3) = 9. Vậy x = ...", ans:"32" },
+          { q:"Câu 20b) Tìm số tự nhiên x biết 121 + (5x - 21) : 4 = 127. Vậy x = ...", ans:"9" }
+      ]},
+      { id:21, maxScore:0.5, q:"Câu 21. Năm học 2025-2026, học sinh khối 6 của một trường THCS trong khoảng 260 đến 310 học sinh. Trong buổi lễ chào cờ đầu tuần, xếp số học sinh đó thành hàng gồm 14 học sinh hay xếp thành hàng 21 học sinh thì không thừa học sinh nào. Hỏi tổng số học sinh của khối 6 là bao nhiêu?", subs:[
+          { q:"Tổng số học sinh của khối 6 là: ...", ans:"294" }
+      ]},
+      { id:22, maxScore:0.5, q:"Câu 22. Một mảnh đất hình chữ nhật có chiều rộng là 3m, Chiều dài gấp 4 lần chiều rộng.", subs:[
+          { q:"a) Tính diện tích khu vườn (m²)?", ans:"36" },
+          { q:"b) Nếu trồng hoa trên toàn bộ mảnh vườn với mỗi cây hoa có giá 8000 đồng và mỗi m² được 12 cây hoa. Hỏi tổng chi phí phải trả (đồng)?", ans:"3456000" }
+      ]}
+    ]
+  }
+};
+
+// ==========================================
+// CÁC HÀM XỬ LÝ LOGIC
+// ==========================================
+let dataP1 = [], dataP2 = [], dataP3 = [], dataP4 = [];
+let userAnswers = { p1:{}, p2:{}, p3:{}, p4:{} };
+
+// LƯU Ý: Đã xóa hàm shuffle() để giữ nguyên thứ tự câu hỏi và đáp án theo yêu cầu.
+
+function startExam(de) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examUI').style.display = 'block';
+  
+  let deTitle = "";
+  if(de === 1) deTitle = "ĐỀ SỐ 1";
+  if(de === 2) deTitle = "ĐỀ SỐ 2";
+  if(de === 3) deTitle = "ĐỀ SỐ 3";
+  if(de === 4) deTitle = "ĐỀ SỐ 4";
+  
+  document.getElementById('examTitleHeader').innerHTML = `PHẦN A. TRẮC NGHIỆM KHÁCH QUAN (7,0 ĐIỂM) - ${deTitle}`;
+  
+  const rawData = allData[de];
+
+  // KHÔNG trộn đề, giữ nguyên thứ tự gốc
+  dataP1 = rawData.p1.map(q => ({ ...q, opts: [...q.opts] })); 
+  dataP2 = [...rawData.p2];
+  dataP3 = [...rawData.p3];
+  dataP4 = [...rawData.p4];
+
+  // Render
+  renderP1(); renderP2(); renderP3(); renderP4();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function renderMedia(src) {
+  if (!src) return '';
+  if (src.startsWith('http') || src.startsWith('data:') || src.includes('.png') || src.includes('.jpg')) {
+    return `<div class="img-container"><img src="${src}" alt="Hình vẽ" style="max-width:100%;max-height:200px;"></div>`;
+  } else {
+    return `<div class="img-container">[ ${src} ]</div>`;
+  }
+}
+
+function renderP1() {
+  let html = '';
+  dataP1.forEach((q, idx) => {
+    const displayId = idx + 1; 
+    html += `<div class="q"><div class="qtext">Câu ${displayId}. ${q.q}</div>`;
+    if (q.img) html += renderMedia(q.img);
+    html += `<div class="opts">`;
+    q.opts.forEach((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      html += `<label class="opt">
+        <input type="radio" name="p1_${q.id}" value="${i}" onchange="userAnswers.p1[${q.id}] = ${i}">
+        <span><b>${letter}.</b> ${opt}</span>
+      </label>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('p1-container').innerHTML = html;
+}
+
+function renderP2() {
+  let html = '';
+  dataP2.forEach((q, idx) => {
+    const displayId = idx + 13;
+    html += `<div class="q"><div class="qtext">Câu ${displayId}. ${q.q}</div>`;
+    if (q.img) html += renderMedia(q.img);
+    html += `<table class="tf-table"><tr><th>Ý</th><th>Nội dung</th><th style="width:120px">Đúng/Sai</th></tr>`;
+    q.subs.forEach((sub, i) => {
+      html += `<tr>
+        <td>${String.fromCharCode(97+i)})</td>
+        <td>${sub.text}</td>
+        <td>
+          <button class="tf-btn" id="tf_${q.id}_${i}_T" data-val="true" onclick="setTF(${q.id}, ${i}, true)">Đ</button>
+          <button class="tf-btn" id="tf_${q.id}_${i}_F" data-val="false" onclick="setTF(${q.id}, ${i}, false)">S</button>
+        </td>
+      </tr>`;
+    });
+    html += `</table></div>`;
+  });
+  document.getElementById('p2-container').innerHTML = html;
+}
+
+function setTF(qId, subIdx, val) {
+  if (!userAnswers.p2[qId]) userAnswers.p2[qId] = {};
+  userAnswers.p2[qId][subIdx] = val;
+  document.getElementById(`tf_${qId}_${subIdx}_T`).classList.remove('active');
+  document.getElementById(`tf_${qId}_${subIdx}_F`).classList.remove('active');
+  document.getElementById(`tf_${qId}_${subIdx}_${val ? 'T' : 'F'}`).classList.add('active');
+}
+
+function renderP3() {
+  let html = '';
+  dataP3.forEach((q, idx) => {
+    const displayId = idx + 15;
+    html += `<div class="q"><div class="qtext">Câu ${displayId}. ${q.q}</div>`;
+    if (q.img) html += renderMedia(q.img);
+    html += `<input type="text" class="fill-input" id="p3_${q.id}" placeholder="Nhập đáp án..." oninput="userAnswers.p3[${q.id}] = this.value">`;
+    html += `</div>`;
+  });
+  document.getElementById('p3-container').innerHTML = html;
+}
+
+function renderP4() {
+  let html = '';
+  dataP4.forEach((q, idx) => {
+    const displayId = idx + 19;
+    html += `<div class="q" style="border-bottom:1px dashed #cbd5e1;padding-bottom:16px;margin-bottom:16px">`;
+    html += `<div class="qtext" style="color:#2563eb">Câu ${displayId} (${q.maxScore} điểm).</div>`;
+    if(q.q) html += `<div style="margin-bottom:10px">${q.q}</div>`;
+    if (q.img) html += renderMedia(q.img);
+    
+    q.subs.forEach((sub, i) => {
+      html += `<div class="sub-q">
+        <p>${sub.q}</p>
+        <input type="text" class="fill-input" id="p4_${q.id}_${i}" placeholder="Nhập kết quả..." oninput="userAnswers.p4['${q.id}_${i}'] = this.value">
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('p4-container').innerHTML = html;
+}
+
+function norm(s) {
+  if(!s) return "";
+  s = String(s).trim().toLowerCase().replace(/\s+/g, '');
+  s = s.replace(/,/g, '.');
+  // Xóa các ký tự thừa trong đáp án số tiền
+  s = s.replace(/đồng|d|đ/g, '');
+  return s;
+}
+function eq(a, b) { return norm(a) === norm(b); }
+
+function submitExam() {
+  let p1Score = 0, p2Score = 0, p3Score = 0, p4Score = 0;
+  let detailHtml = '<h3 style="margin-bottom:10px;color:#1e40af">CHI TIẾT BÀI LÀM</h3>';
+
+  // Chấm Phần I
+  detailHtml += `<h4 style="margin-top:15px">Phần I (Trắc nghiệm)</h4>`;
+  dataP1.forEach((q, idx) => {
+    const displayId = idx + 1;
+    const userAns = userAnswers.p1[q.id];
+    const isCorrect = (userAns === q.ans);
+    if (isCorrect) p1Score += 0.25;
+    detailHtml += `<div class="q-result ${isCorrect ? 'correct' : 'wrong'}">
+      Câu ${displayId}: ${isCorrect ? '✅ Đúng' : '❌ Sai'} 
+      ${!isCorrect ? `(Chọn: ${userAns !== undefined ? String.fromCharCode(65+userAns) : 'Chưa chọn'} - Đáp án: ${String.fromCharCode(65+q.ans)})` : ''}
+    </div>`;
+  });
+
+  // Chấm Phần II
+  detailHtml += `<h4 style="margin-top:15px">Phần II (Đúng - Sai)</h4>`;
+  dataP2.forEach((q, idx) => {
+    const displayId = idx + 13;
+    let correctCount = 0;
+    q.subs.forEach((sub, i) => {
+      const userAns = userAnswers.p2[q.id] ? userAnswers.p2[q.id][i] : undefined;
+      if (userAns === sub.ans) correctCount++;
+    });
+    let p2SubScore = 0;
+    if (correctCount === 1) p2SubScore = 0.1;
+    else if (correctCount === 2) p2SubScore = 0.25;
+    else if (correctCount === 3) p2SubScore = 0.5;
+    else if (correctCount === 4) p2SubScore = 1.0;
+    p2Score += p2SubScore;
+    detailHtml += `<div class="q-result ${correctCount===4 ? 'correct' : 'wrong'}">
+      Câu ${displayId}: Đúng ${correctCount}/4 ý (Được ${p2SubScore} điểm)
+    </div>`;
+  });
+
+  // Chấm Phần III
+  detailHtml += `<h4 style="margin-top:15px">Phần III (Trả lời ngắn)</h4>`;
+  dataP3.forEach((q, idx) => {
+    const displayId = idx + 15;
+    const userVal = userAnswers.p3[q.id];
+    const isCorrect = eq(userVal, q.ans);
+    if (isCorrect) p3Score += 0.5;
+    detailHtml += `<div class="q-result ${isCorrect ? 'correct' : 'wrong'}">
+      Câu ${displayId}: ${isCorrect ? '✅ Đúng' : `❌ Sai (Bạn nhập: ${userVal || 'Trống'} - Đáp án: ${q.ans})`}
+    </div>`;
+  });
+
+  // Chấm Phần IV (Tự luận)
+  detailHtml += `<h4 style="margin-top:15px">Phần IV (Tự luận)</h4>`;
+  dataP4.forEach((q, idx) => {
+    const displayId = idx + 19;
+    let qScore = 0;
+    const ptsPerSub = q.maxScore / q.subs.length; // Chia đều điểm cho các ý nhỏ trong câu
+    
+    let subScores = q.subs.map((sub, i) => {
+      const key = `${q.id}_${i}`;
+      const userVal = userAnswers.p4[key];
+      const isCorrect = eq(userVal, sub.ans);
+      
+      if (isCorrect) {
+        qScore += ptsPerSub;
+        return { isCorrect: true, userVal, ans: sub.ans };
+      } else {
+        return { isCorrect: false, userVal, ans: sub.ans };
+      }
+    });
+
+    qScore = Math.round(qScore * 100) / 100;
+    p4Score += qScore;
+
+    detailHtml += `<div class="q-result" style="background:#f8fafc; border:1px solid #e2e8f0; color:#1f2937">
+      <b style="color:#2563eb">Câu ${displayId} (Được ${qScore}/${q.maxScore}đ):</b>`;
+    subScores.forEach((res, i) => {
+      // Nếu chỉ có 1 ý thì không đánh ký tự a, b, c
+      const prefix = q.subs.length > 1 ? `${String.fromCharCode(97+i)}) ` : '';
+      detailHtml += `<div style="margin-top:5px; color:${res.isCorrect ? '#166534' : '#991b1b'}">
+        ${prefix}${res.isCorrect ? '✅ Đúng' : `❌ Sai (Bạn nhập: ${res.userVal || 'Trống'} - Đáp án: ${res.ans})`}
+      </div>`;
+    });
+    detailHtml += `</div>`;
+  });
+
+  const total = Math.round((p1Score + p2Score + p3Score + p4Score) * 100) / 100;
+  p4Score = Math.round(p4Score * 100) / 100;
+
+  document.getElementById('finalScore').innerText = total;
+  document.getElementById('scoreDetail').innerHTML = `
+    <div>Phần I: ${p1Score}/3.0</div>
+    <div>Phần II: ${p2Score}/2.0</div>
+    <div>Phần III: ${p3Score}/2.0</div>
+    <div>Phần IV: ${p4Score}/3.0</div>
+  `;
+  document.getElementById('reviewContainer').innerHTML = detailHtml;
+  
+  const resultBox = document.getElementById('resultBox');
+  resultBox.classList.add('show');
+  resultBox.scrollIntoView({behavior: 'smooth', block: 'start'});
+  
+  document.getElementById('btnSubmit').style.display = 'none';
+  document.getElementById('btnReload').style.display = 'block';
+}
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
